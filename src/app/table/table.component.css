@@ -1,0 +1,12 @@
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.center{
+  text-align: center;
+  justify-content:center;
+}

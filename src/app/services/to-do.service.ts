@@ -16,7 +16,7 @@ export class ToDoService {
   getToDos():Observable<ToDo[]>{
     return this.http
       .get<ToDo[]>(this.path).pipe(
-        tap(data=>console.log(JSON.stringify(data))),
+        tap(data=> {}),
         catchError(this.handleError)
       );
 
