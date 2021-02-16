@@ -27,9 +27,9 @@ export class UserService {
   handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
-      errorMessage = 'Bir Hata Oluştu' + err.error.message;
+      errorMessage = 'An Error' + err.error.message;
     } else {
-      errorMessage = 'Sistemsel Hata';
+      errorMessage = 'System Error';
     }
     return throwError(errorMessage);
   }

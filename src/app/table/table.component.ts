@@ -75,7 +75,7 @@ export class TableComponent implements OnInit {
       this.dataSource.sort = this.sort;
     }, error => {
       this.spinner.hide();
-      this.openSnackBar("Silme işlemi sırasında bir hata meydana geldi.");
+      this.openSnackBar("Error");
     });
   }
 
@@ -94,10 +94,10 @@ export class TableComponent implements OnInit {
           this.spinner.hide();
           element.title = response.title;
           element.completed = response.completed;
-          this.openSnackBar("Düzenleme işlemi başarıyla ....");
+          this.openSnackBar("Editing Success");
         }, error => {
           this.spinner.hide();
-          this.openSnackBar("Düzenleme işlemi sırasında bir hata meydana geldi.");
+          this.openSnackBar("Error Editing");
         });
       }
     });
