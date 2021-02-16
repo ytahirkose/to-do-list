@@ -28,14 +28,13 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(
+  constructor (
     private toDoService: ToDoService,
     private userService: UserService,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private spinner: NgxSpinnerService,
-    private _snackBar: MatSnackBar
-  ) {
-  }
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -70,23 +69,37 @@ export class TableComponent implements OnInit {
       const position = this.toDos.findIndex(toDo => toDo.id == id);
       const deletingTitle = this.toDos[position].title;
       this.toDos.splice(position, 1);
-      this.openSnackBar(deletingTitle);
+      this.openSnackBar(deletingTitle + ' Deleted');
       this.dataSource = new MatTableDataSource(this.toDos);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }, error => {
       this.spinner.hide();
-
+      this.openSnackBar("Silme işlemi sırasında bir hata meydana geldi.");
     });
   }
 
-  openDialog(element): void {
-    console.log(element);
+  openDialog(element: ToDo) {
+    const editedToDo: ToDo = {
+      ...element
+    }
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '280px',
-      data: {todo: element}
+      data: {todo: editedToDo}
     });
     dialogRef.afterClosed().subscribe(result => {
+      if (result && (editedToDo.completed != element.completed || editedToDo.title != element.title)) {
+        this.spinner.show();
+        this.toDoService.editTodo(editedToDo).subscribe(response => {
+          this.spinner.hide();
+          element.title = response.title;
+          element.completed = response.completed;
+          this.openSnackBar("Düzenleme işlemi başarıyla ....");
+        }, error => {
+          this.spinner.hide();
+          this.openSnackBar("Düzenleme işlemi sırasında bir hata meydana geldi.");
+        });
+      }
     });
   }
 
@@ -97,7 +110,7 @@ export class TableComponent implements OnInit {
   }
 
   openSnackBar(title: string) {
-    this._snackBar.open(title + ' Deleted', '', {
+    this.snackBar.open(title, '', {
       duration: 2000,
     });
   }

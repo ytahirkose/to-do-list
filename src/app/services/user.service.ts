@@ -3,18 +3,18 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {User} from '../models/user';
-
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
-  }
+  path = environment.paths.userPath;
 
-
-  path = 'https://jsonplaceholder.typicode.com/users';
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getUsers(): Observable<User[]> {
     return this.http
@@ -22,12 +22,9 @@ export class UserService {
         tap(data => {}),
         catchError(this.handleError)
       );
-
   }
 
-
   handleError(err: HttpErrorResponse) {
-
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
       errorMessage = 'Bir Hata Oluştu' + err.error.message;
@@ -35,9 +32,5 @@ export class UserService {
       errorMessage = 'Sistemsel Hata';
     }
     return throwError(errorMessage);
-
   }
-
-
-
 }

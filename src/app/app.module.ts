@@ -31,10 +31,8 @@ import {NavComponent} from './nav/nav.component';
     DialogComponent,
     NavComponent
   ],
-
   imports: [
     BrowserModule,
-    MatTableModule,
     MatSortModule,
     HttpClientModule,
     MatTableModule,
@@ -46,8 +44,6 @@ import {NavComponent} from './nav/nav.component';
     MatInputModule,
     MatListModule,
     MatPaginatorModule,
-    MatSortModule,
-    HttpClientModule,
     MatSlideToggleModule,
     FormsModule,
     MatDialogModule,
@@ -57,7 +53,6 @@ import {NavComponent} from './nav/nav.component';
     NgxSpinnerModule,
     MatSnackBarModule
   ],
-
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
